@@ -1,1 +1,1 @@
-web: gunicorn pssd_checker.wsgi
+web: gunicorn pssd_checker.wsgi:application

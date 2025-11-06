@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 Not Found 🚫</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .container {
+    background: rgba(27, 27, 27, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .error-code {
+    font-size: 6em;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff4c4c 0%, #ff6a00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    line-height: 1;
+    animation: glitch 3s infinite;
+  }
+  
+  @keyframes glitch {
+    0%, 90%, 100% { transform: translate(0); }
+    92% { transform: translate(-2px, 2px); }
+    94% { transform: translate(2px, -2px); }
+    96% { transform: translate(-2px, -2px); }
+    98% { transform: translate(2px, 2px); }
+  }
+  
+  .error-emoji {
+    font-size: 4em;
+    margin: 1rem 0;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  h2 {
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    color: #ddd;
+    font-weight: 600;
+  }
+  
+  p {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: #aaa;
+    line-height: 1.6;
+  }
+  
+  a {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  
+  a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+  
+  a:active {
+    transform: translateY(0);
+  }
+  
+  .suggestions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+  }
+  
+  .suggestions h4 {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-bottom: 0.8rem;
+  }
+  
+  .suggestions ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .suggestions li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #aaa;
+    font-size: 0.9rem;
+  }
+  
+  .suggestions li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="error-code">404</h1>
+    <span class="error-emoji">🚫</span>
+    <h2>Page Not Found</h2>
+    <p>Oops! The page you're looking for seems to have wandered off into the digital void.</p>
+    <a href="/">🔙 Back to Home</a>
+    
+    <div class="suggestions">
+      <h4>What can you do?</h4>
+      <ul>
+        <li>Check the URL for typos</li>
+        <li>Go back to the homepage</li>
+        <li>Use the search feature</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

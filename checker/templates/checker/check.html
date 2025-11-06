@@ -173,6 +173,16 @@
   .checking {
     animation: pulse 1.5s infinite;
   }
+
+  .security-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: #4caf50;
+    margin-top: 0.5rem;
+    opacity: 0.7;
+  }
 </style>
 </head>
 <body>
@@ -201,9 +211,14 @@
         <li>Don't reuse passwords</li>
       </ul>
     </div>
+    
+    <div class="security-badge">
+      🔒 End-to-end encrypted communication
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script>
     const input = document.getElementById("password-input");
     const toggle = document.getElementById("toggle-eye");
@@ -212,6 +227,20 @@
     const breachText = document.getElementById("breach-text");
     
     let timer = null;
+
+    // Get encryption key from Django template context
+    const ENCRYPTION_KEY = "{{ ENCRYPTION_KEY }}";
+
+    function encryptPassword(password) {
+      try {
+        // Encrypt using AES - CryptoJS already returns base64
+        const encrypted = CryptoJS.AES.encrypt(password, ENCRYPTION_KEY).toString();
+        return encrypted;
+      } catch (e) {
+        console.error("Encryption failed:", e);
+        return null;
+      }
+    }
 
     input.addEventListener("input", () => {
       const val = input.value;
@@ -226,7 +255,7 @@
         return;
       }
 
-      // Live strength meter using zxcvbn
+      // Live strength meter using zxcvbn (client-side, no network call)
       const result = zxcvbn(val);
       const score = result.score;
       const colors = ['#ff2e2e', '#ff6a00', '#ffc107', '#00bcd4', '#4caf50'];
@@ -245,7 +274,19 @@
         breachText.className = "breach checking";
         
         try {
-          const res = await fetch(`/Y2hlY2tfYnJlYWNo/?password=${encodeURIComponent(val)}`);
+          // Encrypt password before sending
+          const encryptedPassword = encryptPassword(val);
+          
+          if (!encryptedPassword) {
+            breachText.className = "breach";
+            breachText.textContent = "🔒 Encryption failed";
+            breachText.style.color = "#ff4c4c";
+            breachText.style.background = "rgba(255, 76, 76, 0.1)";
+            return;
+          }
+
+          // Send encrypted password
+          const res = await fetch(`/Y2hlY2tfYnJlYWNo/?data=${encodeURIComponent(encryptedPassword)}`);
           const data = await res.json();
           breachText.className = "breach";
           
@@ -268,7 +309,7 @@
           breachText.style.color = "#999";
           breachText.style.background = "rgba(255,255,255,0.03)";
         }
-      }, 1000); // Wait 1 second after typing stops
+      }, 1000);
     });
 
     toggle.addEventListener("click", () => {
